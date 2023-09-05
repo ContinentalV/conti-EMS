@@ -4,7 +4,7 @@ const employe = require('../../models/employe')
 const mongoose = require("mongoose");
 const config = require("../../config");
 
-
+// BODY MATRICULE ==> BUG A FINIR DE FIX
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('get-cv')
@@ -21,6 +21,9 @@ module.exports = {
         const emmergencyRole= interaction.guild.roles.cache.find(role  => role.id === config.role.EmergencyRescue)
         const EMTrole =interaction.guild.roles.cache.find(role  => role.id === config.role.EMT)
         const attEntrRole =interaction.guild.roles.cache.find(role  => role.id === config.role.attEntretien)
+        console.log(emmergencyRole)
+        console.log(EMTrole)
+        console.log(attEntrRole)
         //####### BUTTON #############
         const confirm = new ButtonBuilder()
             .setCustomId("confirm")
@@ -107,8 +110,10 @@ const embeds = new EmbedBuilder()
                    nom: targetCV.nom  ,
                    prenom: targetCV.prenom ,
                    avatar: targetCV.avatar,
-                   grade:  100,
-                   matricule: `${roles[1].name}. ${targetCV.nom} ${targetCV.prenom} ` }
+                   grade:  100}
+                // ,
+                //     ${roles[1].name}.                matricule: `${roles[1].name}. ${targetCV.nom} ${targetCV.prenom} `
+                   console.log(body)
 
                 //EMBEDS ACCEPT
                 const acceptEmbed = new EmbedBuilder()
@@ -116,7 +121,7 @@ const embeds = new EmbedBuilder()
                     .setTitle('CV ACCEPTER PAR ' + member.nickname)
                     .setTimestamp()
                     .setDescription(`
-                    - ** ${body.id} - ${roles[1].name}. ${targetCV.nom} ${targetCV.prenom}**
+                    - ** ${body.id} - ${targetCV.nom} ${targetCV.prenom}**
                     - <@${targetCV.id}> -> Role applique: <@&${roles[0].id}> - <@&${roles[1].id}>
                     `)
                     .setThumbnail(targetCV.avatar)
@@ -154,7 +159,7 @@ const embeds = new EmbedBuilder()
                 TargetToSendDM.roles.add(EMTrole )
                 TargetToSendDM.roles.remove(attEntrRole)
                 if(member.id !== '465144095996772369'){
-                    TargetToSendDM.setNickname(body.matricule)
+                  //  TargetToSendDM.setNickname(body.matricule)
                 }
 
                 TargetToSendDM.send({embeds: [acceptDMEmbed]})
@@ -206,7 +211,8 @@ const embeds = new EmbedBuilder()
                 await confirmation.update({ embeds: [new EmbedBuilder().setColor('DarkRed').setTimestamp().setTitle('Refus de cv par: ' + member.nickname).setFooter({text: `Vous avez supprimer le cv de ${targetCV?.nom} ${targetCV?.prenom}`, iconURL: targetCV?.avatar}) ], components: [] });
             }
         }catch(err){
-            console.log(err)
+            console.log(err.stack)
+            console.log(err.stackTrace)
         await interaction.editReply({content: `Confirmation not received within 1 minute, cancelling`, components: [] })
         }
 

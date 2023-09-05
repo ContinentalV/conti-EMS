@@ -14,6 +14,7 @@ module.exports = {
         const citizenRole = message.guild.roles.cache.find(role  => role.id === config.role.citizenRole)
 
         const unlockCitizen = (msg, member) => {
+            console.log(msg)
            member.setNickname(`[CIT] - ${msg.content}`)
             member.roles.add(citizenRole )
         }

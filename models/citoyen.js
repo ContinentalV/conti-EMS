@@ -11,8 +11,6 @@ const citoyenSchema = mongoose.Schema({
     // A voir ci dessous:
     cv: {type: mongoose.Schema.Types.ObjectId, ref: 'citoyen', default: null }
 
-
-
 })
 
 module.exports = mongoose.model('citoyen', citoyenSchema)
