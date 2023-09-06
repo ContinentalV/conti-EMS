@@ -54,6 +54,18 @@ module.exports = {
             .setDescription('Le patient a til payer la facture? ')
             .setRequired(true))
 
+        .addStringOption(option =>
+            option
+                .setName('symptome')
+                .setDescription('Indiquez les different symptome du patient ')
+                .setRequired(true))
+
+        .addStringOption(option =>
+            option
+                .setName('post-traitement')
+                .setDescription('Indiquez les different traitement/exercice de reeducation prescris au patienst ')
+                .setRequired(true))
+
 
         .addAttachmentOption(option =>
         option
@@ -61,17 +73,40 @@ module.exports = {
             .setDescription('uploader la carte d\'identité')
             .setRequired(true)
         )
+
+        .addStringOption(option =>
+            option
+                .setName('note-complementaire')
+                .setDescription('Indiquez une note complémentaire si necessaire'))
         .addUserOption(option =>
         option
-            .setName('coéquipier')
-            .setDescription('Mentionner votre coequipier')),
+            .setName('ambulancier')
+            .setDescription('Mentionnerl\'ambulancier'))
+
+        .addUserOption(option =>
+            option
+                .setName('chirurgiens')
+                .setDescription('Mentionner le chirurgiens'))
+
+        .addUserOption(option =>
+            option
+                .setName('infirmier')
+                .setDescription('Mentionner l\'infirmier'))
+        .addUserOption(option =>
+            option
+                .setName('anesthesite')
+                .setDescription('Mentionner l\'anesthesiste'))
+        .addUserOption(option =>
+            option
+                .setName('medecin')
+                .setDescription('Mentionner le medecin')),
 
     async execute(interaction) {
 
         const {member, options, user, client} = interaction
         const verifEmployeRoles = member.roles.cache.find(r => r.id=== config.role.EmergencyRescue)
         const verifDbEmploye = await employe.findOne({id: member.id})
-        let name, prenom, cause, identity, partnerMember, facture, factureIsPaid;
+        let name, prenom, cause, identity, partnerMember, facture, factureIsPaid,ambulancier,medecin, chirugiens, infirmier, anesthesite, symptome, postTraitement, noteCplmt ;
         name = options.getString('nom')
         prenom = options.getString('prenom')
         cause = options.getString('cause')
@@ -79,12 +114,34 @@ module.exports = {
         partnerMember = options.getUser('coéquipier') ?  options.getUser('coéquipier') : null
         facture = options.getString('facture')
         factureIsPaid = options.getBoolean('facture-payer')
+        ambulancier = options.getUser('ambulancier')
+       medecin = options.getUser('medecin')
+        chirugiens = options.getUser('chirurgiens')
+        infirmier = options.getUser('infirmier')
+        anesthesite = options.getUser('anesthesite')
+        symptome = options.getString('symptome')
+        postTraitement = options.getString('post-traitement')
+        noteCplmt = options.getString('note-complementaire')
+        let verifyJobs = []
 
         const dossier = {    nom: name, prenom, cause, identity: identity.url, partner : partnerMember ? partnerMember.id : null , montant: facture, facturePaid: factureIsPaid, agent: member.id }
 
 
+        const verifyJob =  async  (chir, inf, anes, med, ambu) => {
+            const allJob = [chir, inf, anes, med, ambu]
 
+            allJob.forEach((job)=> {
+               // console.log(job?.id)
+                if(job?.username !== 'undefined'){
+                  //  console.log(job?.id)
+                   // verifyJobs.push(job.id)
+                }
+            })
 
+        }
+
+    let x = await verifyJob(chirugiens, infirmier, anesthesite, medecin, ambulancier)
+    console.log(x)
 
 
         if(!verifEmployeRoles || !verifDbEmploye) return interaction.reply({content: 'Vous n\'ête pas ems, vous ne' +
@@ -109,17 +166,27 @@ module.exports = {
             .setDescription(`
              Ajout d'un nouveau dossier patient. 
              
-             ◈ ━━━━━━━━ ◆ ━━━━━━━━ ◈
-             > - Nom patient: \`\`${name.toUpperCase()}\`\`
-             > - Prénom patient:  \`\`${prenom.toUpperCase()}\`\`
-             > - Cause du coma:  \`\`${cause.toUpperCase()}\`\`
-             > - Date:  \`\`${new Date(Date.now()).toLocaleDateString()}\`\`
-             > - Montant de la facture: \`\`${facture} $\`\`
-             > - Facture payer: ${factureIsPaid ? "**OUI**" : "**NON**"}
-             ◈ ━━━━━━━━ ◆ ━━━━━━━━ ◈
+# ◈ ━━━━━━━━ ◆ ━━━━━━━━ ◈
+#  INFORMATION PATIENT
+> - Nom patient: \`\`${name.toUpperCase()}\`\`
+> - Prénom patient:  \`\`${prenom.toUpperCase()}\`\`
+> - Cause du coma:  \`\`${cause.toUpperCase()}\`\`
+> - Date:  \`\`${new Date(Date.now()).toLocaleDateString()}\`\`
+# ◈ ━━━━━━━━ ◆ ━━━━━━━━ ◈             
+# SUIVI MEDICAL: 
+> - Symptome: \`\`${symptome.toUpperCase()}\`\`
+> - Traitement: \`\`${postTraitement.toUpperCase()}\`\`
+> - intervenant: \`\ \`\`
+> - Metier des intervenant:  \`\`\`\`       
+# ◈ ━━━━━━━━ ◆ ━━━━━━━━ ◈             
+# FACTURATION             
+> - Montant de la facture: \`\`${facture} $\`\`
+> - Facture payer: ${factureIsPaid ? "**OUI**" : "**NON**"}
+# ◈ ━━━━━━━━ ◆ ━━━━━━━━ ◈
              
-             Agent: ${member} - <@&${member.roles.highest.id}>
-             Coéquipier:  ${partnerMember ?  ` ${partnerMember} ` : 'aucun'}
+             
+             
+             
              
              `)
             .setFooter({text: `Dossier valider par: ${client.user.username}`, iconURL: member.displayAvatarURL({dynamic: true})})
