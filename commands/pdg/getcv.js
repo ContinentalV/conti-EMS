@@ -21,9 +21,7 @@ module.exports = {
         const emmergencyRole= interaction.guild.roles.cache.find(role  => role.id === config.role.EmergencyRescue)
         const EMTrole =interaction.guild.roles.cache.find(role  => role.id === config.role.EMT)
         const attEntrRole =interaction.guild.roles.cache.find(role  => role.id === config.role.attEntretien)
-        console.log(emmergencyRole)
-        console.log(EMTrole)
-        console.log(attEntrRole)
+
         //####### BUTTON #############
         const confirm = new ButtonBuilder()
             .setCustomId("confirm")
@@ -48,7 +46,7 @@ module.exports = {
 
         //#######  LIST CV ###########
        let listcv = await dbcv.find();
-        console.log(listcv)
+
         if (!target) {
 
             const mappingData = listcv.length >= 1 ? listcv.map((cv) => ` id -> \`\`${cv._id} \`\`\nNom: ${cv.nom}\nPrénom: ${cv.prenom}  `).join(`\n\n`) : `Pas de cv en bdd`
@@ -103,17 +101,18 @@ const embeds = new EmbedBuilder()
                 //###### ROLE A METTRE ##########
 
                 const roles = [emmergencyRole, EMTrole]
-
                 // ####### CREATION DU PROFIL EMS ##########
                 const body = {
                    id: targetCV.id ,
                    nom: targetCV.nom  ,
                    prenom: targetCV.prenom ,
                    avatar: targetCV.avatar,
-                   grade:  100}
+                   grade:  100,
+                    matricule: `${roles[1].name}. ${targetCV.nom} ${targetCV.prenom} `
+                }
                 // ,
                 //     ${roles[1].name}.                matricule: `${roles[1].name}. ${targetCV.nom} ${targetCV.prenom} `
-                   console.log(body)
+
 
                 //EMBEDS ACCEPT
                 const acceptEmbed = new EmbedBuilder()
@@ -158,10 +157,8 @@ const embeds = new EmbedBuilder()
                 TargetToSendDM.roles.add(emmergencyRole )
                 TargetToSendDM.roles.add(EMTrole )
                 TargetToSendDM.roles.remove(attEntrRole)
-                if(member.id !== '465144095996772369'){
-                  //  TargetToSendDM.setNickname(body.matricule)
-                }
 
+                  await TargetToSendDM.setNickname(body.matricule)
                 TargetToSendDM.send({embeds: [acceptDMEmbed]})
 
 
@@ -176,7 +173,7 @@ const embeds = new EmbedBuilder()
                 //#### Creation de l'emploi & supression du cv ##########
                 await employe.create(body)
                 await confirmation.update({content: `Mail to **${TargetToSendDM.nickname}** is sent !`,embeds: [acceptEmbed] , components: []})
-                await dbcv.findByIdAndDelete(targetCV._id)
+                 await dbcv.findByIdAndDelete(targetCV._id)
 
 
             }

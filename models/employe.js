@@ -18,6 +18,8 @@ const employeSchema = mongoose.Schema({
     payeGlobal: {type: Number, default: 0},
     resetTime: Number,
     absence:Array,
+    formation:Array ,
+    metier: Array,
 })
 
 
