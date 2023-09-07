@@ -49,7 +49,7 @@ module.exports = {
 
         if (!target) {
 
-            const mappingData = listcv.length >= 1 ? listcv.map((cv) => ` id -> \`\`${cv._id} \`\`\nNom: ${cv.nom}\nPrénom: ${cv.prenom}  `).join(`\n\n`) : `Pas de cv en bdd`
+            const mappingData = listcv.length >= 1 ? listcv.map((cv) => ` id -> \`\`${cv._id} \`\`\nNom: ${cv.nom}\nPrénom: ${cv.prenom}\nAge HRP: ${cv.age[1]}   `).join(`\n\n`) : `Pas de cv en bdd`
             const embeds = new EmbedBuilder()
                 .setDescription(mappingData)
                 .setTimestamp()

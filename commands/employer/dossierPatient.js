@@ -112,7 +112,6 @@ module.exports = {
         prenom = options.getString('prenom')
         cause = options.getString('cause')
         identity = options.getAttachment('carte-identité')
-        partnerMember = options.getUser('coéquipier') ?  options.getUser('coéquipier') : null
         facture = options.getString('facture')
         factureIsPaid = options.getBoolean('facture-payer')
         ambulancier = options.getUser('ambulancier')
@@ -126,6 +125,9 @@ module.exports = {
         let verifyAgent = []
         let jobOn  = []
         const jobsUse = interaction.options._hoistedOptions;
+
+
+
 
          jobsUse.forEach((job) => {
 
@@ -159,13 +161,17 @@ module.exports = {
         if(!verifEmployeRoles || !verifDbEmploye) return interaction.reply({content: 'Vous n\'ête pas ems, vous ne' +
                 'pouvez pas effectuez cette commande'})
 
-
-
-
-
-
-
-
+        function hasDuplicates(array) {
+            for (let i = 0; i < array.length; i++) {
+                for (let j = i + 1; j < array.length; j++) {
+                    if (array[i] === array[j]) {
+                        return true; // La valeur en double a été trouvée
+                    }
+                }
+            }
+            return false; // Aucune valeur en double trouvée
+        }
+        if(hasDuplicates(verifyAgent)) return interaction.reply('Vous ne pouvez pas selectionner plusieurs fois le meme agents, pour différent metier.')
 
         for (const el of verifyAgent) {
             const partnerDb = await  employe.findOne({id: el})
@@ -198,21 +204,15 @@ module.exports = {
 > - Traitement: \`\`${postTraitement.toUpperCase()}\`\`
 
 > - INTERVENANT: \n ${intervenant}
-  
-> - Metier des intervenant: \n ${skillJob}
 
+> - Metier des intervenant: \n ${skillJob}
         
 # ◈ ━━━━━━━━ ◆ ━━━━━━━━ ◈             
 # FACTURATION             
 > - Montant de la facture: \`\`${facture} $\`\`
 > - Facture payer: ${factureIsPaid ? "**OUI**" : "**NON**"}
 # ◈ ━━━━━━━━ ◆ ━━━━━━━━ ◈
-             
-             
-             
-             
-             
-             `)
+ `)
             .setFooter({text: `Dossier valider par: ${client.user.username}`, iconURL: member.displayAvatarURL({dynamic: true})})
             .setTimestamp()
             .setThumbnail(member.displayAvatarURL({dynamic: true}))
