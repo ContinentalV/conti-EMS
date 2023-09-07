@@ -19,6 +19,48 @@ module.exports = {
     Pdg: "1115431149947338792",
     limiteur1: "1111736111249756180",
     limiteur2: "1115430855788212254",
+  },
+
+  roles: {
+
+    metier: {
+      ambulancier: {
+        name: "ambulancier",
+        id: '1148682088183251026',
+      },
+      infirmier: {
+        name: "infirmier",
+        id: "1148681244842926211",
+      },
+      chirurgiens: {
+        name: "chirurgiens",
+        id: "1148681424644354168",
+      },
+      medecin: {
+        name: "medecin",
+        id: "1148681001149661245",
+      },
+      anesthesite: {
+        name: 'anesthesite',
+        id: '1148681498078224384',
+      }
+    },
+
+
+    formations: {
+
+    },
+
+
+
+    direction: {
+
+    }
+
+
+
+
   }
+
 
 }

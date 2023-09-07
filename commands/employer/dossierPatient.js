@@ -43,8 +43,8 @@ module.exports = {
                 .setName('facture')
                 .setDescription('Indiquez le montant de la facture')
                 .addChoices(
-                    {name: "75K", value: "75000"},
-                    {name: "150K", value: "150000"},
+                    {name: "35K", value: "35000"},
+                              {name: "75K", value: "75000"},
                     )
                 .setRequired(true)
         )
@@ -99,14 +99,15 @@ module.exports = {
         .addUserOption(option =>
             option
                 .setName('medecin')
-                .setDescription('Mentionner le medecin')),
+                .setDescription('Mentionner le medecin'))
+   ,
 
     async execute(interaction) {
 
         const {member, options, user, client} = interaction
         const verifEmployeRoles = member.roles.cache.find(r => r.id=== config.role.EmergencyRescue)
         const verifDbEmploye = await employe.findOne({id: member.id})
-        let name, prenom, cause, identity, partnerMember, facture, factureIsPaid,ambulancier,medecin, chirugiens, infirmier, anesthesite, symptome, postTraitement, noteCplmt ;
+        let name, prenom, cause, identity, partnerMember, facture, factureIsPaid,ambulancier,medecin, chirugiens, infirmier, anesthesite, symptome, postTraitement, noteCplmt , met1, met2, met3, met4;
         name = options.getString('nom')
         prenom = options.getString('prenom')
         cause = options.getString('cause')
@@ -122,45 +123,64 @@ module.exports = {
         symptome = options.getString('symptome')
         postTraitement = options.getString('post-traitement')
         noteCplmt = options.getString('note-complementaire')
-        let verifyJobs = []
+        let verifyAgent = []
+        let jobOn  = []
+        const jobsUse = interaction.options._hoistedOptions;
+
+         jobsUse.forEach((job) => {
+
+            if(job.type !== 6) return
+            console.log(job.name)
+            const jobId = Object.values(config.roles.metier).find(role => role.name === job.name)?.id
+            if (!jobId) return
+             jobOn.push(jobId)
+        })
+
+
 
         const dossier = {    nom: name, prenom, cause, identity: identity.url, partner : partnerMember ? partnerMember.id : null , montant: facture, facturePaid: factureIsPaid, agent: member.id }
-
-
-        const verifyJob =  async  (chir, inf, anes, med, ambu) => {
+        const verifyAgentFunct =  async  (chir, inf, anes, med, ambu) => {
             const allJob = [chir, inf, anes, med, ambu]
 
-            allJob.forEach((job)=> {
-               // console.log(job?.id)
-                if(job?.username !== 'undefined'){
-                  //  console.log(job?.id)
-                   // verifyJobs.push(job.id)
-                }
+            allJob.forEach((job) => {
+                 if(job=== null) return
+
+                verifyAgent.push(job.id)
+
+
             })
+
 
         }
 
-    let x = await verifyJob(chirugiens, infirmier, anesthesite, medecin, ambulancier)
-    console.log(x)
 
+        await verifyAgentFunct(chirugiens, infirmier, anesthesite, medecin, ambulancier)
 
         if(!verifEmployeRoles || !verifDbEmploye) return interaction.reply({content: 'Vous n\'ête pas ems, vous ne' +
                 'pouvez pas effectuez cette commande'})
-         if(partnerMember !== null) {
-           const partnerDb =await  employe.findOne({id: partnerMember.id})
-             console.log(partnerDb)
-            if(!partnerDb) return interaction.reply({content: "Le coequipier selectionner n'est pas un ems. " })
+
+
+
+
+
+
+
+
+
+        for (const el of verifyAgent) {
+            const partnerDb = await  employe.findOne({id: el})
+            if(!partnerDb) interaction.reply({content: "Le coequipier selectionner n'est pas un ems. "});
             partnerDb.reanimation += 1
             await partnerDb.save()
-        }
-
+                   }
         verifDbEmploye.reanimation += 1
         await  verifDbEmploye.save()
 
         await dossierDb.create(dossier).then((resp) => console.log(resp), {upsert: true})
 
 
-
+        const intervenant = verifyAgent.map((int) => `<@${int}>` ).join('\n')
+        const skillJob = jobOn.map((metier) => `<@&${metier}>` ).join('\n')
         const embed = new EmbedBuilder()
             .setTitle(`DOSSIER PATIENT 『${name} - ${prenom}』`)
             .setDescription(`
@@ -176,8 +196,12 @@ module.exports = {
 # SUIVI MEDICAL: 
 > - Symptome: \`\`${symptome.toUpperCase()}\`\`
 > - Traitement: \`\`${postTraitement.toUpperCase()}\`\`
-> - intervenant: \`\ \`\`
-> - Metier des intervenant:  \`\`\`\`       
+
+> - INTERVENANT: \n ${intervenant}
+  
+> - Metier des intervenant: \n ${skillJob}
+
+        
 # ◈ ━━━━━━━━ ◆ ━━━━━━━━ ◈             
 # FACTURATION             
 > - Montant de la facture: \`\`${facture} $\`\`
