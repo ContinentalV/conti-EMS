@@ -37,7 +37,7 @@ const convertMinutesInHours = minutes => {
     else return {minute: minutes}
 }
 
-const salaryCalc = (montant, nbrea) => {
+const salaryCalc = (montant, nbrea, metier, grade) => {
     console.log(montant, nbrea)
 
     if(montant * nbrea > 10000000 ) return 10000000

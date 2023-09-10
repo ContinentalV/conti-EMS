@@ -15,6 +15,7 @@ const dbgrade = require('../../models/configGrades')
 const dbabsence = require('../../models/absence')
 
 
+
 module.exports = {
     data: new ContextMenuCommandBuilder()
         .setName('EMS PROFILE')
@@ -46,8 +47,8 @@ module.exports = {
         const xRoles = await interaction.guild.members.fetch(interaction.targetUser.id)
         const gradesTarget  = await dbgrade.findOne({gradeId: grade})
 
-        const salaryNoFormated = salaryCalc(gradesTarget.gradeRatio, reanimation)
-        const salary = new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3, style: 'currency', currency:'USD' }).format(salaryNoFormated)
+      //  const salaryNoFormated = salaryCalc(gradesTarget.gradeRatio, reanimation)
+      //  const salary = new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3, style: 'currency', currency:'USD' }).format(salaryNoFormated)
 
         const embeds = new EmbedBuilder()
             .setColor('Random')
@@ -71,7 +72,7 @@ module.exports = {
                 { name: `EN VILLE`, value: ` \`\`${isCity ? "🟢🟢🟢" : "🔴🔴🔴"}\`\` `, inline: true },
                 {
                     name: `\u200b`,
-                    value: `> - Nombre de réa:\`\`${reanimation}\`\` \n> - Nombre de réa spécial:\`\`0\`\` \n> - Paye hebdomadaire:\`\`${salary}\`\``,
+                    value: `> - Nombre de réa:\`\`${reanimation}\`\` \n> - Nombre de réa spécial:\`\`0\`\` \n> - Paye hebdomadaire:\`\`A DEFINIR  \`\``,
                     inline: false
                 })
             .setTimestamp()

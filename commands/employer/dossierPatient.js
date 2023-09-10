@@ -115,7 +115,7 @@ module.exports = {
         facture = options.getString('facture')
         factureIsPaid = options.getBoolean('facture-payer')
         ambulancier = options.getUser('ambulancier')
-       medecin = options.getUser('medecin')
+        medecin = options.getUser('medecin')
         chirugiens = options.getUser('chirurgiens')
         infirmier = options.getUser('infirmier')
         anesthesite = options.getUser('anesthesite')
@@ -140,7 +140,6 @@ module.exports = {
 
 
 
-        const dossier = {    nom: name, prenom, cause, identity: identity.url, partner : partnerMember ? partnerMember.id : null , montant: facture, facturePaid: factureIsPaid, agent: member.id }
         const verifyAgentFunct =  async  (chir, inf, anes, med, ambu) => {
             const allJob = [chir, inf, anes, med, ambu]
 
@@ -158,6 +157,7 @@ module.exports = {
 
         await verifyAgentFunct(chirugiens, infirmier, anesthesite, medecin, ambulancier)
 
+
         if(!verifEmployeRoles || !verifDbEmploye) return interaction.reply({content: 'Vous n\'ête pas ems, vous ne' +
                 'pouvez pas effectuez cette commande'})
 
@@ -172,6 +172,11 @@ module.exports = {
             return false; // Aucune valeur en double trouvée
         }
         if(hasDuplicates(verifyAgent)) return interaction.reply('Vous ne pouvez pas selectionner plusieurs fois le meme agents, pour différent metier.')
+        const intervenant = verifyAgent.map((int) => `<@${int}>` ).join('\n')
+        const skillJob = jobOn.map((metier) => `<@&${metier}>` ).join('\n')
+        console.log(noteCplmt)
+        const dossier = {    nom: name, prenom, cause, identity: identity.url,  montant: facture, facturePaid: factureIsPaid, agent: member.id, symptome:symptome, postTraitement:postTraitement, noteCplmt: noteCplmt , metier:skillJob, intervenant:intervenant }
+
 
         for (const el of verifyAgent) {
             const partnerDb = await  employe.findOne({id: el})
@@ -185,8 +190,6 @@ module.exports = {
         await dossierDb.create(dossier).then((resp) => console.log(resp), {upsert: true})
 
 
-        const intervenant = verifyAgent.map((int) => `<@${int}>` ).join('\n')
-        const skillJob = jobOn.map((metier) => `<@&${metier}>` ).join('\n')
         const embed = new EmbedBuilder()
             .setTitle(`DOSSIER PATIENT 『${name} - ${prenom}』`)
             .setDescription(`

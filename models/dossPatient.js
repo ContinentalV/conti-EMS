@@ -10,7 +10,14 @@ const dossierPatientSchema = mongoose.Schema({
     agent: {type: String, required: true},
     partner: {type: String , default: null},
     montant: {type: Number, required: true},
-    facturePaid: {type: Boolean, required: true}
+    facturePaid: {type: Boolean, required: true},
+    intervenant: {type: Array, required: true },
+    metier: {type: Array, required:true },
+    symptome: {type: String,  required:true },
+    postTraitement : {type: String,  required:true },
+    noteCplmt: {type: String },
+
+
 
 })
 
