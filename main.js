@@ -17,6 +17,7 @@ const client = new Client({
   GatewayIntentBits.DirectMessages,
 
 
+
   ]
 });
 client.commands = new Collection();

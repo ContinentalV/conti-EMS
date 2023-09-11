@@ -51,6 +51,7 @@ module.exports = {
 
         const max = salaireObject.limit ? salaireObject.limit : null
         const gradeRoles = xRoles._roles;
+        console.log(gradeRoles)
         const primeSalary= Object.values(price.PrimeGrade).find((role) => gradeRoles.includes(role.id))
 
 
