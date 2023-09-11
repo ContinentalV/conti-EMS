@@ -13,6 +13,9 @@ const { minToHeure, showHistoryPds, salaryCalc } = require('../../function/funct
 const { ForceFds, historyButton, backButton,  deleteAbsenceButton } = require('../../config/buttonFile')
 const dbgrade = require('../../models/configGrades')
 const dbabsence = require('../../models/absence')
+const price = require('../../price')
+const config = require("../../config");
+
 
 
 
@@ -41,14 +44,23 @@ module.exports = {
             avatar,
             absence
         } = EMSDB
+
+
+       //console.log(price.EMT.calcSalary(20))
         const rowService = new ActionRowBuilder()
             .addComponents(ForceFds, historyButton, backButton, deleteAbsenceButton);
         let work = await minToHeure(EMSDB.service.workingTime)
         const xRoles = await interaction.guild.members.fetch(interaction.targetUser.id)
-        const gradesTarget  = await dbgrade.findOne({gradeId: grade})
+        let metierRoleId = xRoles.roles.highest.id
+        const metierSalary = Object.values(price).find(role => role.id === metierRoleId)
+        const salaireObject = await metierSalary.calcSalary(reanimation)
+        const quota = salaireObject.quota ? salaireObject.quota : null
+        const max = salaireObject.limit ? salaireObject.limit : null
+
+
 
       //  const salaryNoFormated = salaryCalc(gradesTarget.gradeRatio, reanimation)
-      //  const salary = new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3, style: 'currency', currency:'USD' }).format(salaryNoFormated)
+       const salary = new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3, style: 'currency', currency:'USD' }).format(salaireObject.salary)
 
         const embeds = new EmbedBuilder()
             .setColor('Random')
@@ -72,7 +84,7 @@ module.exports = {
                 { name: `EN VILLE`, value: ` \`\`${isCity ? "🟢🟢🟢" : "🔴🔴🔴"}\`\` `, inline: true },
                 {
                     name: `\u200b`,
-                    value: `> - Nombre de réa:\`\`${reanimation}\`\` \n> - Nombre de réa spécial:\`\`0\`\` \n> - Paye hebdomadaire:\`\`A DEFINIR  \`\``,
+                    value: `> - Nombre de réa:\`\`${reanimation}\`\` \n> - Nombre de réa spécial:\`\`0\`\` \n> - Paye hebdomadaire:\`\` ${salary}  \`\``,
                     inline: false
                 })
             .setTimestamp()
