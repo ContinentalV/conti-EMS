@@ -33,12 +33,6 @@ module.exports = {
             id,
             isService,
             historique,
-            paye,
-            payeGlobal,
-            nom,
-            prenom,
-            grade,
-            service,
             reanimation,
             isCity,
             avatar,
@@ -52,15 +46,21 @@ module.exports = {
         let work = await minToHeure(EMSDB.service.workingTime)
         const xRoles = await interaction.guild.members.fetch(interaction.targetUser.id)
         let metierRoleId = xRoles.roles.highest.id
-        const metierSalary = Object.values(price).find(role => role.id === metierRoleId)
+        const metierSalary = Object.values(price.SalaryJob).find(role => role.id === metierRoleId)
         const salaireObject = await metierSalary.calcSalary(reanimation)
-        const quota = salaireObject.quota ? salaireObject.quota : null
+
         const max = salaireObject.limit ? salaireObject.limit : null
+        const gradeRoles = xRoles._roles;
+        const primeSalary= Object.values(price.PrimeGrade).find((role) => gradeRoles.includes(role.id))
+
+
 
 
 
       //  const salaryNoFormated = salaryCalc(gradesTarget.gradeRatio, reanimation)
-       const salary = new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3, style: 'currency', currency:'USD' }).format(salaireObject.salary)
+        const salary = new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3, style: 'currency', currency:'USD' }).format(salaireObject.salary)
+        const salaryPrime = new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3, style: 'currency', currency:'USD' }).format(primeSalary.prix)
+        const payeTotal =  new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3, style: 'currency', currency:'USD' }).format(salaireObject.salary + primeSalary.prix)
 
         const embeds = new EmbedBuilder()
             .setColor('Random')
@@ -84,7 +84,14 @@ module.exports = {
                 { name: `EN VILLE`, value: ` \`\`${isCity ? "🟢🟢🟢" : "🔴🔴🔴"}\`\` `, inline: true },
                 {
                     name: `\u200b`,
-                    value: `> - Nombre de réa:\`\`${reanimation}\`\` \n> - Nombre de réa spécial:\`\`0\`\` \n> - Paye hebdomadaire:\`\` ${salary}  \`\``,
+                    value: `
+                    > - Nombre de réa:\`\`${reanimation}\`\` \
+                    
+                    > - Paye hebdomadaire:\`\` ${salary}  \`\` 
+                    > - Prime:\`\`${salaryPrime}\`\` - <@&${primeSalary.id}>
+                    > - Paye total: \`\`${payeTotal}\`\`
+                    > - quota rempli:\`\` ${reanimation < 40 ? "Le quota n'a pas été remplis" : "Le quota a bien été remplis"}  \`\`
+                    > - paye max:\`\` ${max !== null ? 'Paye maximum atteinte': "Paye max NON ATTEINTE"}  \`\``,
                     inline: false
                 })
             .setTimestamp()

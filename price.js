@@ -1,5 +1,9 @@
 module.exports = {
 
+    SalaryJob: {
+
+
+
     EMT: {
         nom: "EMT",
         prix: 46700,
@@ -86,8 +90,47 @@ module.exports = {
         }
     }
 
+    },
+    PrimeGrade: {
+
+        CDS: {
+            nom: "Chef des services",
+            id: "1148687063315652698",
+            prix: 3000000,
+        },
+
+        DMU: {
+            nom: "Cadre DMU",
+            id: "1148750838840426558",
+            prix: 1000000,
+        },
+
+        CASUP: {
+            nom: "Cadre Supérieur",
+            id: "1148686875708620830",
+            prix: 1000000,
+        },
+        CA: {
+            nom: "Cadre",
+            id: "1148686820993941575",
+            prix: 1000000,
+        },
+        CE: {
+            nom: "Chef d'equipe",
+            id: "1150481345206829096",
+            prix: 1000000,
+
+        },
+        EMS: {
+            nom: 'Emmergency Rescue',
+            id: "1113289021481828372",
+            prix:0,
+
+        }
 
 
+
+    }
 
 }
 
