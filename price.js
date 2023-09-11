@@ -102,18 +102,18 @@ module.exports = {
         DMU: {
             nom: "Cadre DMU",
             id: "1148750838840426558",
-            prix: 1000000,
+            prix: 2500000,
         },
 
         CASUP: {
             nom: "Cadre Supérieur",
             id: "1148686875708620830",
-            prix: 1000000,
+            prix: 2000000,
         },
         CA: {
             nom: "Cadre",
             id: "1148686820993941575",
-            prix: 1000000,
+            prix: 1500000,
         },
         CE: {
             nom: "Chef d'equipe",

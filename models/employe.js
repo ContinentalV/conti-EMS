@@ -7,7 +7,7 @@ const employeSchema = mongoose.Schema({
     nom: {type: String, required: true},
     prenom: {type: String, required: true},
     avatar: String,
-    grade: {type: String, required:true },
+    grade: {type: String, required:true }, // WEB
     matricule: {type: String, required:true},
     service: {pds: {type: Number, default: 0}, fds: {type:Number, default: 0}, workingTime: {type: Number, default:0}},
     isService: {type:Boolean, default: false},
@@ -18,8 +18,7 @@ const employeSchema = mongoose.Schema({
     payeGlobal: {type: Number, default: 0},
     resetTime: Number,
     absence:Array,
-    formation:Array ,
-    metier: Array,
+
 })
 
 
