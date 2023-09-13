@@ -222,7 +222,7 @@ module.exports = {
             .setColor('Random')
             .setImage(identity.url)
 
-        interaction.reply({embeds: [embed]})
+        interaction.reply({embeds: [embed], ephemeral:true})
 
 
     }
