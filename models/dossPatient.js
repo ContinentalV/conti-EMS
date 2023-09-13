@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const dayjs  =  require('dayjs')
 
 
 const dossierPatientSchema = mongoose.Schema({
@@ -20,5 +21,29 @@ const dossierPatientSchema = mongoose.Schema({
 
 
 })
+
+dossierPatientSchema.methods.extractDataFromDocument = function() {
+
+    // EXTRACT DATE
+    const objDate = this._id
+    const ts = objDate.getTimestamp()
+    const formatage = dayjs(ts).format('DD/MM/YYYY HH:mm:ss')
+
+    // EXTRACT SUIVI
+    let cause, symptome, postTraitement, noteCplmt, date, intervenant;
+
+    cause = this.cause;
+    symptome = this.symptome;
+    postTraitement = this.postTraitement;
+    noteCplmt = this.noteCplmt;
+    date = formatage
+    intervenant = this.intervenant;
+
+    return  { cause, symptome, postTraitement, noteCplmt, date, intervenant}
+
+
+
+}
+
 
 module.exports = mongoose.model('dossierPatient',dossierPatientSchema)

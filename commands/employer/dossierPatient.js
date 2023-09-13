@@ -175,7 +175,7 @@ module.exports = {
         const intervenant = verifyAgent.map((int) => `<@${int}>` ).join('\n')
         const skillJob = jobOn.map((metier) => `<@&${metier}>` ).join('\n')
         console.log(noteCplmt)
-        const dossier = {    nom: name, prenom, cause, identity: identity.url,  montant: facture, facturePaid: factureIsPaid, agent: member.id, symptome:symptome, postTraitement:postTraitement, noteCplmt: noteCplmt , metier:skillJob, intervenant:intervenant }
+        const dossier = {    nom: name.toUpperCase(), prenom: prenom.toUpperCase(), cause: cause.toUpperCase(), identity: identity.url,  montant: facture, facturePaid: factureIsPaid, agent: member.id, symptome:symptome.toUpperCase(), postTraitement:postTraitement.toUpperCase(), noteCplmt: noteCplmt , metier:skillJob, intervenant:intervenant }
 
 
         for (const el of verifyAgent) {
