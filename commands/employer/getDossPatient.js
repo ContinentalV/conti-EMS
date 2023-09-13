@@ -37,7 +37,7 @@ module.exports = {
 
 
 
-        const patientFolder  = await dossPatien.find({nom: name,prenom: nickname }).sort({_id: -1})
+        const patientFolder  = await dossPatien.find({nom: name,prenom: nickname }).sort({_id: -1}).limit(10)
         if(patientFolder.length <1) return interaction.reply({embeds: [new EmbedBuilder().setColor('Red').setDescription('Aucun dossier trouvé a ce nom: ' + name.toUpperCase() + ' ' + nickname.toUpperCase())], ephemeral:true})
         let ci = patientFolder[0].identity
         patientFolder.map( (doss) => {
