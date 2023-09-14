@@ -39,6 +39,10 @@ module.exports = {
     ,
     async execute(interaction) {
 
+    const {options, user, member, client, guild} =  interaction;
+    let chir, ambu;
+    chir = options.getString('formations-chir')
+    ambu = options.getString('formations-ambu')
 
 
 
