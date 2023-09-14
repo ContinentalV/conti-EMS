@@ -21,6 +21,7 @@ module.exports = {
                 .addChoices(
                     {name: "Ambulance basique", value: config.roles.formations.basiqueAmbu},
                     {name: "Ambulance Advanced", value: config.roles.formations.advancedAmbu},
+                    {name: "Aucune forma ambulance", value:"null"},
 
                 )
         )
@@ -32,6 +33,7 @@ module.exports = {
 
                     {name: "Chirugie Basique", value: config.roles.formations.basiqueChir},
                     {name: "Chirugie avancer", value: config.roles.formations.advancedChir},
+                    {name: "Aucune forma chirurgie", value:"null"},
                 )
         )
     ,
