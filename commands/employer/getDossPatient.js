@@ -4,7 +4,11 @@ const ObjectId = require('mongoose').Types.ObjectId
 const axios = require("axios");
 const dayjs = require('dayjs')
 
-
+/**
+ * @command /get-doss-patient
+ * @description Cette commande renvoie permet de prendre ca pds".
+ * @usage /get-doss-patient {nom} {prenom}
+ */
 
 module.exports = {
     data: new SlashCommandBuilder()

@@ -1,6 +1,11 @@
 const { SlashCommandBuilder, ModalBuilder, TextInputBuilder, ActionRowBuilder, TextInputStyle} = require('discord.js')
 
 
+/**
+ * @command /absence
+ * @description Cette commande permet de déclarer une absense
+ * @usage /absence
+ */
 
 module.exports = {
   data: new SlashCommandBuilder()
