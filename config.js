@@ -49,7 +49,10 @@ module.exports = {
 
 
     formations: {
-
+    basiqueChir: "1151668251802226698",
+    advancedChir: "1151668348770320465",
+    basiqueAmbu: "1148681948525502494",
+    advancedAmbu: "1151668820885389372"
     },
 
 
