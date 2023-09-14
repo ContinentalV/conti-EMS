@@ -4,7 +4,7 @@ const employe  = require('../../models/employe')
 
 /**
  * @command /fds
- * @description Cette commande renvoie permet de prendre ca fin de service".
+ * @description Cette commande renvoie permet de prendre ca fin de service
  * @usage /fds
  */
 

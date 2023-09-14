@@ -6,6 +6,12 @@ const {minToHeure} = require("../../function/functions");
 
 
 
+/**
+ * @command /stats
+ * @description Cette commande renvoie les informations général (réa & et pds) des ems classer du plus grand au plus petit
+ * @usage  /Stats
+ */
+
 
 module.exports = {
     data: new SlashCommandBuilder()

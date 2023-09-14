@@ -1,6 +1,10 @@
 const {SlashCommandBuilder, EmbedBuilder, ButtonStyle, ButtonBuilder, ActionRowBuilder} = require('discord.js')
 const config = require("../../config");
-
+/**
+ * @command /add-formations
+ * @description Cette commande permet d'appliquer les formations réussi par un employer (direction) .
+ * @usage /add-formations -> {ambu / chir}
+ */
 
 
 module.exports = {

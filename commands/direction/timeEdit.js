@@ -2,6 +2,12 @@ const { SlashCommandBuilder, EmbedBuilder} = require('discord.js')
 const emsdb = require('../../models/employe')
 
 
+/**
+ * @command /timeEdit
+ * @description manipule le temps / rea d'un employer.
+ * @usage   /timeEdit { mode, manage-time, valeur , employer}
+ */
+
 
 module.exports = {
     data: new SlashCommandBuilder()

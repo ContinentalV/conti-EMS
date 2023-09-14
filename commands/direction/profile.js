@@ -17,7 +17,11 @@ const price = require('../../price')
 const config = require("../../config");
 
 
-
+/**
+ * @command [Cnotext] profil ems
+ * @description Cette commande renvoie le profil d'un ems.
+ * @usage  clic droit sur un agent -> Appplication -> profile EMS
+ */
 
 module.exports = {
     data: new ContextMenuCommandBuilder()

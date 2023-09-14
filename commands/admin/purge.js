@@ -1,5 +1,9 @@
 const {SlashCommandBuilder} = require('discord.js');
-
+/**
+ * @command /purges
+ * @description Cette commande permet de clear les 100 derniers message d'un channel
+ * @usage /purge
+ */
 
 module.exports = {
     data: new SlashCommandBuilder()

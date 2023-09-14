@@ -1,5 +1,9 @@
 const {SlashCommandBuilder, Events} = require('discord.js');
-
+/**
+ * @command /emitters
+ * @description Cette commande permet de simuler un event discord.
+ * @usage /emitters {params for emitters}
+ */
 
 module.exports = {
     data: new SlashCommandBuilder()

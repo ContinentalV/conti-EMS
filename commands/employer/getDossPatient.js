@@ -6,7 +6,7 @@ const dayjs = require('dayjs')
 
 /**
  * @command /get-doss-patient
- * @description Cette commande renvoie permet de prendre ca pds".
+ * @description Cette commande renvoie permet de recuperer le suivi d'un patient
  * @usage /get-doss-patient {nom} {prenom}
  */
 

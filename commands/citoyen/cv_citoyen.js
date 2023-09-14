@@ -2,7 +2,11 @@ const {SlashCommandBuilder, EmbedBuilder} = require('discord.js');
 const cv = require('../../models/cv')
 const cit = require('../../models/citoyen')
 const config = require('../../config')
-
+/**
+ * @command /cv
+ * @description Cette commande permet de simuler un event discord.
+ * @usage /cv {nom, prenom, age, disponnibilite, qualiteDefault, experience, motivation, casier, skill, whyYou, annexe, avatar, id;}
+ */
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('cv')

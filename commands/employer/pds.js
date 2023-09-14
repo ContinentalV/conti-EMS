@@ -3,7 +3,7 @@ const dayjs = require('dayjs')
 const employe  = require('../../models/employe')
 /**
  * @command /pds
- * @description Cette commande renvoie permet de prendre ca pds".
+ * @description Cette commande renvoie permet de prendre ca pds.
  * @usage /pds
  */
 

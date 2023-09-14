@@ -3,7 +3,11 @@ const cv = require('../../models/cv')
 const cit = require('../../models/citoyen')
 const config = require('../../config')
 const {Rules_EMS, Barem_EMS} = require("../../message-predefini");
-
+/**
+ * @command /information
+ * @description  a voir si je laisse ou opti.
+ * @usage /*********************************
+ */
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('information-predefini')

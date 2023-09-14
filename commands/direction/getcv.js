@@ -3,6 +3,12 @@ const dbcv = require('../../models/cv')
 const employe = require('../../models/employe')
 const mongoose = require("mongoose");
 const config = require("../../config");
+/**
+ * @command /get-cv
+ * @description Cette commande renvoie la liste des cv. Si on y insère l'id , elle renvoie le cv selectionner, pour le refuser ou l'accepter".
+ * @usage /get-cv {id} -> ( faculttif )
+ */
+
 
 // BODY MATRICULE ==> BUG A FINIR DE FIX
 module.exports = {

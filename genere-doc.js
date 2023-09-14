@@ -47,7 +47,7 @@ if (specialComments.length > 0) {
 
         const matches = comment.match(/@command\s+([\s\S]*?)\n/i);
 
-        console.log(matches)
+
 
      //   console.log(matches)
         if (matches) {
@@ -55,13 +55,13 @@ if (specialComments.length > 0) {
         }
 
         const descriptionMatches = comment.match(/@description\s+([\s\S]*?)\n/i);
-        console.log(descriptionMatches)
+
         if (descriptionMatches) {
             commandInfo.description = descriptionMatches[1].trim();
         }
 
         const usageMatches = comment.match(/@usage\s+([\s\S]*?)\n/i);
-        console.log(usageMatches)
+
         if (usageMatches) {
             commandInfo.usage = usageMatches[1].trim();
         }
