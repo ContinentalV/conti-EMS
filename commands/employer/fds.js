@@ -2,7 +2,11 @@ const { SlashCommandBuilder, EmbedBuilder} = require('discord.js')
 const dayjs = require('dayjs')
 const employe  = require('../../models/employe')
 
-
+/**
+ * @command /fds
+ * @description Cette commande renvoie permet de prendre ca fin de service".
+ * @usage /fds
+ */
 
 module.exports = {
     data: new SlashCommandBuilder()

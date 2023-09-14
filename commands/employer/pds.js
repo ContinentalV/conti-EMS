@@ -1,7 +1,11 @@
 const { SlashCommandBuilder, EmbedBuilder} = require('discord.js')
 const dayjs = require('dayjs')
 const employe  = require('../../models/employe')
-
+/**
+ * @command /pds
+ * @description Cette commande renvoie permet de prendre ca pds".
+ * @usage /pds
+ */
 
 module.exports = {
     data: new SlashCommandBuilder()

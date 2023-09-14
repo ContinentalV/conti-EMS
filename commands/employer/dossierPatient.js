@@ -2,7 +2,11 @@ const { SlashCommandBuilder, EmbedBuilder} = require('discord.js')
 const config = require('../../config')
 const employe = require('../../models/employe')
 const dossierDb = require('../../models/dossPatient')
-
+/**
+ * @command /dossier-patient
+ * @description Cette commande permet de creer, mettre a jour le dossier medical d'un patient.
+ * @usage /dossier-patient name, prenom, cause, identity, partnerMember, facture, factureIsPaid,ambulancier,medecin, chirugiens, infirmier, anesthesite, symptome, postTraitement, noteCplmt , met1, met2, met3, met4;
+ */
 
 
 
