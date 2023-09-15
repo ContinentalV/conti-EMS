@@ -1,18 +1,18 @@
 const OpenAI = require('openai');
-
+const x = process.env.OPENAI_API_KEY
 const openai = new OpenAI({
-    apiKey: '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',
+    apiKey: x,
 });
 
-module.exports = async (messages, model = "gpt-3.5-turbo") => {
+module.exports = async (prompt, model = "text-davinci-003") => {
     try {
-        const completion = await openai.chat.completions.create({
-            messages,
+        const completion = await openai.completions.create({
             model,
-
+            prompt,
+            max_tokens: 3000, // Définissez le nombre maximum de tokens de sortie en fonction de vos besoins
+            temperature: 0.8, // Vous pouvez ajuster la température pour contrôler la créativité de la réponse
         });
-        console.log(completion)
-        return completion.choices[0].message;
+        return completion.choices[0].text;
     } catch (e) {
         console.log(e);
     }
