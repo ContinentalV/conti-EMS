@@ -15,17 +15,10 @@ const client = new Client({
   GatewayIntentBits.GuildMembers,
   GatewayIntentBits.GuildPresences,
   GatewayIntentBits.DirectMessages,
-
-
-
   ]
 });
 client.commands = new Collection();
 module.exports = client;
-
-
-
-
 
 
 fs.readdirSync('./handlers').forEach(handler => {

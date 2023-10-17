@@ -13,10 +13,6 @@ module.exports = {
         const {  member, user } = interaction
         const citizen = await dbCitizen.findOne({id: user.id })
 
-
-
-
-
         if(!citizen) {
             const body = {
                 name: user.username,

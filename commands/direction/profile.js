@@ -74,7 +74,7 @@ module.exports = {
             ━━━━━━━━━❪❃❫━━━━━━━━━
             
             ${interaction.targetUser} - ${xRoles.roles.highest} 
-            > - Temps effectuer: \`\`${work.hours ? ` ${work.hours} Heures et ${work.minute} minutes` : `0 Heures et ${work.minute} minutes`}\`\`
+            > - Tempsds effectuer: \`\`${work.hours ? ` ${work.hours} Heures et ${work.minute} minutes` : `0 Heures et ${work.minute} minutes`}\`\`
             > - Derniere prise de service: \`\` ${dayjs(EMSDB?.historique[EMSDB?.historique?.length - 1]?.pds).format('DD-MM-YYYY - HH:mm:ss')} \`\`
             > - Total d'absence: \`\` ${absence?.length} \`\` 
             > - Derniere/prochaine absence: \`\` ${dayjs(absence[absence.length -1]?.start).format('DD-MM-YYYY')} \`\` 
