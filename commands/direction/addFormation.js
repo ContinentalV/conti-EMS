@@ -9,44 +9,54 @@ const config = require("../../config");
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('add-formation')
+        .setName('cr-forma')
         .setDescription('ajoute les formation sur le profil de l\'employe')
+
         .addUserOption(option =>
             option
-                .setName('ems')
-                .setDescription("Selectionner l'ems qui a passer les formation")
-
-        )
-
-        .addStringOption(option =>
-            option
-                .setName('formations-ambu')
-                .setDescription("Choisir les formation  a appliquer a l'utilisateur")
-                .addChoices(
-                    {name: "Ambulance basique", value: config.roles.formations.basiqueAmbu},
-                    {name: "Ambulance Advanced", value: config.roles.formations.advancedAmbu},
-                    {name: "Aucune forma ambulance", value:"null"},
-
-                )
+                .setName('agent-ems')
+                .setDescription("Indiquez l'agent ems en formation")
+                .setRequired(true)
         )
         .addStringOption(option =>
-            option
-                .setName('formations-chir')
-                .setDescription("Choisir les formation  a appliquer a l'utilisateur")
-                .addChoices(
-
-                    {name: "Chirugie Basique", value: config.roles.formations.basiqueChir},
-                    {name: "Chirugie avancer", value: config.roles.formations.advancedChir},
-                    {name: "Aucune forma chirurgie", value:"null"},
-                )
+        option
+            .setName('selection-formation')
+            .setDescription('Choisissez la formation effectuer.')
+            .setRequired(true)
+            .addChoices(
+                {name:'Ambulance', value: 'ambu'},
+                        {name:"Chirugie", value: "chir"},
+            )
+        )
+        .addStringOption(option =>
+        option
+            .setName('appreciation')
+            .setDescription('Indiquez votre appreciation sur la formation de cette employer.')
         )
     ,
     async execute(interaction) {
 
     const {options, user, member, client, guild} =  interaction;
-    let chir, ambu;
-    chir = options.getString('formations-chir')
-    ambu = options.getString('formations-ambu')
+
+    let agent, forma, appreciation;
+    agent = options.getUser('agent-ems')
+    forma = options.getString('selection-formation')
+    appreciation = options.getString('appreciation')
+
+    console.log(agent.id)
+
+    const embedCR = new EmbedBuilder()
+        .setTitle('Fiche de notation - Formation')
+        .setDescription(`
+        Agent EMS: 
+        Type de formation: 
+        Appreciation de l'evaluateur: 
+        
+        `)
+        .setFooter({text: `Evaluez par: ${user.username}`, iconURL:member.displayAvatarURL({dynamic:true})})
+        .setColor('Random')
+        interaction.reply({embeds: [embedCR]})
+
 
 
 
